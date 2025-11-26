@@ -4,7 +4,7 @@
   "description": "Device Inventory Tracker Backend",
   "main": "server.js",
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "scripts": {
     "start": "node server.js",
