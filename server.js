@@ -13,13 +13,21 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.get('/favicon.ico', (req, res) => res.status(204).end());
+app.get('/favicon.png', (req, res) => res.status(204).end());
 // Routes
 app.use('/api/devices', deviceRoutes);
 
 // Health check
-app.get('/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server ishlayapti!' });
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Device Inventory Tracker API',
+    version: '1.0.0',
+    endpoints: {
+      health: '/health',
+      devices: '/api/devices'
+    }
+  });
 });
 
 // Error handler
