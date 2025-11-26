@@ -15,10 +15,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 app.get('/favicon.png', (req, res) => res.status(204).end());
-// Routes
+
 app.use('/api/devices', deviceRoutes);
 
-// Health check
+
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Device Inventory Tracker API',
@@ -30,10 +30,10 @@ app.get('/', (req, res) => {
   });
 });
 
-// Error handler
+// Error aniqlash uchun
 app.use(errorHandler);
 
-// 404 handler
+
 app.use((req, res) => {
   res.status(404).json({
     success: false,
@@ -43,12 +43,12 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Vercel uchun - faqat local development da listen qilish
+
 const startServer = async () => {
   try {
     await connectDB();
     
-    // Vercel serverless da app.listen ishlamaydi
+   
     if (process.env.NODE_ENV !== 'production') {
       app.listen(PORT, () => {
         console.log(`Server ${PORT} portda ishlamoqda`);
@@ -59,10 +59,10 @@ const startServer = async () => {
   }
 };
 
-// Local development uchun
+
 if (require.main === module) {
   startServer();
 }
 
-// Vercel uchun export
+
 module.exports = app;
