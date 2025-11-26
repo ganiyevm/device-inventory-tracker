@@ -19,7 +19,7 @@ app.use('/api/devices', deviceRoutes);
 
 // Health check
 app.get('/health', (req, res) => {
-  res.json({ status: 'OK', message: 'Server ishlayapti' });
+  res.json({ status: 'OK', message: 'Server ishlayapti!' });
 });
 
 // Error handler
@@ -35,18 +35,26 @@ app.use((req, res) => {
 
 const PORT = process.env.PORT || 5000;
 
+// Vercel uchun - faqat local development da listen qilish
 const startServer = async () => {
   try {
     await connectDB();
     
-    app.listen(PORT, () => {
-      console.log(`🚀 Server ${PORT} portda ishga tushdi`);
-      console.log(`📊 API: http://localhost:${PORT}/api`);
-    });
+    // Vercel serverless da app.listen ishlamaydi
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT, () => {
+        console.log(`Server ${PORT} portda ishlamoqda`);
+      });
+    }
   } catch (error) {
-    console.error('❌ Serverni ishga tushirishda xatolik:', error);
-    process.exit(1);
+    console.error('Server ishga tushurishda xatolik:', error);
   }
 };
 
-startServer();
+// Local development uchun
+if (require.main === module) {
+  startServer();
+}
+
+// Vercel uchun export
+module.exports = app;
